@@ -19,4 +19,4 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.setuptools]
-py-modules = ["guard", "journal", "paper_book", "auditor", "demo"]
+py-modules = ["guard", "journal", "paper_book", "auditor", "stats", "demo"]

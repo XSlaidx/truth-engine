@@ -21,3 +21,7 @@ state.json
 .env.*
 *.key
 *.pem
+
+# артефакты git credential-хелпера (см. skill repo-secret-hygiene)
+Usersxslai*
+*gh_cred*
