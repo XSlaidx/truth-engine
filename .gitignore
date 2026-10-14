@@ -1,0 +1,23 @@
+# environments and caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# run artefacts: the journal is written per installation, never committed
+runs/
+*.jsonl
+
+# runtime switches created by guard.py
+stop
+stop_hard
+locked.json
+state.json
+
+# secrets: this repo needs none, and that is the point
+.env
+.env.*
+*.key
+*.pem

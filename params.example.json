@@ -1,0 +1,40 @@
+{
+ "params_version": "demo-2024-01-01",
+ "interval": "1h",
+ "interval_ms": 3600000,
+ "symbols": {
+  "DEMOUSDT": {
+   "start_price": 100.0
+  }
+ },
+ "costs": {
+  "fee_side": 0.0005,
+  "slip_side": 0.0002
+ },
+ "strategy": {
+  "fast": 9,
+  "slow": 21,
+  "stop_atr": 1.0,
+  "take_atr": 1.5,
+  "max_hold_bars": 48
+ },
+ "risk": {
+  "max_open_positions": 1,
+  "max_active_orders": 2,
+  "daily_stop_pct": 1.0,
+  "loss_streak_limit": 3,
+  "leverage": 1
+ },
+ "guards": {
+  "drift_limit_ms": 1500,
+  "recv_window_ms": 5000,
+  "killswitch_soft_file": "stop",
+  "killswitch_hard_file": "stop_hard",
+  "lock_file": "locked.json"
+ },
+ "gate": {
+  "min_weeks": 4,
+  "min_trades": 30,
+  "require_net_nonnegative": true
+ }
+}

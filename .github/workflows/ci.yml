@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install test dependencies
+        run: python -m pip install --upgrade pip pytest
+      - name: unit tests
+        run: python -m pytest -q
+      - name: the harness must run end to end and audit clean
+        run: python demo.py --runs 2
+      - name: the auditor must fail a tampered journal
+        run: |
+          python - <<'PY'
+          import json, subprocess, sys
+          path = "runs/journal.jsonl"
+          lines = open(path, encoding="utf-8").read().splitlines()
+          record = json.loads(lines[0])
+          symbol = next(iter(record["symbols"]))
+          record["symbols"][symbol]["trades"][0]["net"] = 0.75   # rewrite history
+          lines[0] = json.dumps(record, ensure_ascii=False)
+          open(path, "w", encoding="utf-8").write("\n".join(lines) + "\n")
+          code = subprocess.call([sys.executable, "auditor.py", "--journal", path,
+                                  "--params", "params.example.json"])
+          assert code != 0, "auditor accepted a tampered journal"
+          print("auditor correctly rejected the tampered journal")
+          PY

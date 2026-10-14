@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "truth-engine"
+version = "0.1.0"
+description = "Verification harness for trading hypotheses: risk guard, append-only journal, honest paper book, independent auditor"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []          # stdlib only, on purpose: nothing to trust but the code you can read
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools]
+py-modules = ["guard", "journal", "paper_book", "auditor", "demo"]
